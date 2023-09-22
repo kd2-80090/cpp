@@ -27,13 +27,14 @@ class Student
             cout<<"Enter roll number of student:";
             cin>>this->rollno;
             cout<<"Enter name of student:";
-            cin>>this->name;
+            cin.ignore();
+            getline(cin,name);
             cout<<"Enter marks of student:";
             cin>>this->marks;
         }
         void printStudentOnConsole()
         {
-            cout<<"Roll no  : "<<this->rollno<<"\nName of Student   :"<<this->name<<"\nMarks  :"<<this->marks<<endl;
+            cout<<"\n*********************\n"<<"Student Details"<<"Roll no  : "<<this->rollno<<"\nName of Student   :"<<this->name<<"\nMarks  :"<<this->marks<<"\n*********************\n"<<endl;
         }
 };
 int main()
