@@ -42,9 +42,9 @@ int main()
     Student s1;
     do
     {
-        printf("1.Default Details\n2.Print Details of student\n3.Accept Details of Students\n0.Exit\n");
-        printf("Enter your choice:\n");
-        scanf("%d",&choice);
+        cout<<"1.Default Details\n2.Print Details of student\n3.Accept Details of Students\n0.Exit\n";
+        cout<<"Enter your choice:\n";
+        cin>>choice;
         switch(choice)
         {
             case 1:
