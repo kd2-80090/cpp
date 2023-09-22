@@ -9,46 +9,80 @@ using namespace std;
 class Address
 {
     private:
-             string home;
+             string building;
+             string street;
              string city;
              int pincode;
     public:
-            void acceptAddress()
+            void acceptAddress()        //FACILITATOR
             {
-                cout<<"Enter address details:\n1.Home\n2.City\n3.Pincode\n";
-                getline(cin,home);
+                cout<<"Enter address details:\n1.Building\n2.Street\n3.City\n4.Pincode\n";
+                getline(cin,building);
+                getline(cin,street);
                 getline(cin,city);
+                cin>>pincode;
             }
-            void displayAddress()
+            void displayAddress()       //FACILITATOR
             {
-                cout<<"\nAddress details:\n"<<"1.Home: "<<home<<"\n2.City:"<<city<<"\n3.Pincode: "<<pincode;
+                cout<<"\n********************\nAddress details:\n"<<"1.Building: "<<building<<"\n2.Street: "<<street<<"\n3.City: "<<city<<"\n4.Pincode: "<<pincode<<"\n********************"<<endl;
             }
-            Address()
+            Address()           //Constructor
             {
                 //cout<<"in default/parameterless constructor";
             }
-            Address(string home,string city) : home(home),city(city)
+            Address(string building,string street,string city,int pincode) : building(building),street(street),city(city),pincode(pincode)
             {
                 //cout<<"in parameterized constructor";
+            }
+            string setBuilding(string building)     //MUTATOR/SETTER FOR PIN
+            {
+                return this->building=building;
+            }
+            string setStreet(string street)
+            {
+                return this->street=street;
             }
             string setCity(string city)
             {
                 return this->city=city;
             }
+        
+            int setPincode(int pincode)
+            {
+                return this->pincode=pincode;
+            }
+            string getBuilding(string building)     //INSPECTOR FOR BUILDING
+            {
+                return this->building;
+            }
+            string getStreet(string street)
+            {
+                return this->street;
+            }
             string getCity(string city)
             {
                 return this->city;
+            }
+            int getPincode(int pincode)
+            {
+                return this->pincode;
             }
 };
 int main()
 {
     Address ad;
-    Address("default","Ahmednagar");
-    ad.displayAddress();
+    Address ad2("102","Pipeline","Ahmednagar",414001);
+    ad2.displayAddress();
     ad.acceptAddress();
     ad.displayAddress();
+    ad.setBuilding("502");
+    ad.setStreet("Savedi");
     ad.setCity("Pune");
+    ad.setPincode(411033);
     ad.displayAddress();
-    cout<<"City is "<<ad.getCity("Pune");
-
+    cout<<"\nBuilding is "<<ad.getBuilding("502");
+    cout<<"\nStreet is "<<ad.getStreet("Savedi");
+    cout<<"\nCity is "<<ad.getCity("Pune");
+    cout<<"\nPincode is "<<ad.getPincode(411033);
+    return 0;
 }
