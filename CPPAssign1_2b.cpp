@@ -53,9 +53,9 @@ int main()
     Date d1;
     do
     {
-        printf("1.Print Default Date\n2.Print Date\n3.Accept Date\n4.See if Leap year\n0.Exit\n");
-        printf("Enter your choice:\n");
-        scanf("%d",&choice);
+        cout<<"1.Print Default Date\n2.Print Date\n3.Accept Date\n4.See if Leap year\n0.Exit\n";
+        cout<<"Enter your choice:\n";
+        cin>>choice;
         switch(choice)
         {
             case 1:
