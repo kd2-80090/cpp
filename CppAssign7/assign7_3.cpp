@@ -187,43 +187,195 @@ public:
         cout<<"----------------------"<<endl;
     }
 };
+enum EMENU
+{
+    EXIT,
+    EACCEPT,
+    EDISPLAY_COUNT_EMP,
+    EDISPLAY_DESGINAION_EMP
+};
+
+enum EACCEPT
+{
+    ACCEPT_SALESMAN,
+    ACCEPT_MANAGER,
+    ACCEPT_SALESMAN_MANAGER
+};
+
+enum EDISPLAY_COUNT_EMP
+{
+    DISPLAY_COUNT_SALESMAN,
+    DISPLAY_COUNT_MANAGER,
+    DISPLAY_COUNT_SALESMAN_MANAGER
+};
+
+enum EDISPLAY_DESGINAION_EMP
+{
+    DISPLAY_SALESMAN,
+    DISPLAY_MANAGER,
+    DISPLAY_SALESMAN_MANAGER,
+    DISPLAY_ALL_EMP
+};
+
+EACCEPT m1()
+{
+    int choice;
+    cout<<"*******************************************";
+    cout<<"\n0.EXIT";
+    cout<<"\n1.ACCEPT_EMPLOYEE";
+    cout<<"\n2.DISPLAY_COUNT_ALL_EMPLOYEE";
+    cout<<"\n3.DISPLAY_RESPECTIVE_DESIGNATION_EMPLOYEE";
+    cout<<"*******************************************";
+    return EACCEPT(choice);
+}
+
+EDISPLAY_COUNT_EMP m2()
+{
+    int choice;
+    cout<<"*******************************************";
+    cout<<"\n0.EXIT";
+    cout<<"\n1.ACCEPT_EMPLOYEE";
+    cout<<"\n2.DISPLAY_COUNT_ALL_EMPLOYEE";
+    cout<<"\n3.DISPLAY_RESPECTIVE_DESIGNATION_EMPLOYEE";
+    cout<<"*******************************************";
+    return EDISPLAY_COUNT_EMP(choice);
+}
+
+EDISPLAY_DESIGNATION_EMP m3()
+{
+    int choice;
+    cout<<"*******************************************";
+    cout<<"\n0.EXIT";
+    cout<<"\n1.SALESMAN";
+    cout<<"\n2.MANAGER";
+    cout<<"\n3.SALES_MANAGER";
+    cout<<"\n4.ALL_EMPLOYEE";
+    cout<<"*******************************************";
+    return EDISPLAY_DESGINAION_EMP(choice);
+}
+
+EMENU menu()
+{
+    int choice;
+    cout<<"*******************************************";
+    cout<<"\n0.EXIT";
+    cout<<"\n1.ACCEPT_EMPLOYEE";
+    cout<<"\n2.DISPLAY_COUNT_ALL_EMPLOYEE";
+    cout<<"\n3.DISPLAY_RESPECTIVE_DESIGNATION_EMPLOYEE";
+    cout<<"*******************************************";
+    return EMENU(choice);
+}
 
 int main()
 {
-    Employee e;
-    cout<<"----------------------"<<endl;
-    cout<<"\nEnter the details for the Employee:  "<<endl;
-    cout<<"----------------------"<<endl;
-    e.accept();
-    e.display();
 
-    // Manager m2(1,2,3);
-    Manager m1;
-    cout<<"----------------------"<<endl;
-    cout<<"\nEnter the details for the Manager:  "<<endl;
-    cout<<"----------------------"<<endl;
-    m1.accept();
-    m1.display();
+    // Employee e;
+    // cout<<"----------------------"<<endl;
+    // cout<<"\nEnter the details for the Employee:  "<<endl;
+    // cout<<"----------------------"<<endl;
+    // e.accept();
+    // e.display();
 
-    // Salesman s;
-    // s.display();
-    // Salesman s2(1,2,3);
-    Salesman s1;
-    cout<<"----------------------"<<endl;
-    cout<<"\nEnter the details for the Salesman:  "<<endl;
-    cout<<"----------------------"<<endl;
-    s1.accept();
-    s1.display();
-    
-    // Sales_manager s1;
+    // // Manager m2(1,2,3);
+    // Manager m1;
+    // cout<<"----------------------"<<endl;
+    // cout<<"\nEnter the details for the Manager:  "<<endl;
+    // cout<<"----------------------"<<endl;
+    // m1.accept();
+    // m1.display();
+
+    // // Salesman s;
+    // // s.display();
+    // // Salesman s2(1,2,3);
+    // Salesman s1;
+    // cout<<"----------------------"<<endl;
+    // cout<<"\nEnter the details for the Salesman:  "<<endl;
+    // cout<<"----------------------"<<endl;
+    // s1.accept();
     // s1.display();
-    // Sales_manager s2(1,2.00,30.00,40.00);
-    Sales_manager s;
-    cout<<"----------------------"<<endl;
-    cout<<"\nEnter the details for the Sales Manager:  "<<endl;
-    cout<<"----------------------"<<endl;
-    s.accept();
-    s.display();
+    
+    // // Sales_manager s1;
+    // // s1.display();
+    // // Sales_manager s2(1,2.00,30.00,40.00);
+    // Sales_manager s;
+    // cout<<"----------------------"<<endl;
+    // cout<<"\nEnter the details for the Sales Manager:  "<<endl;
+    // cout<<"----------------------"<<endl;
+    // s.accept();
+    // s.display();
+
+    EMENU choice;
+    EACCEPT c1;
+    EDISPLAY_COUNT_EMP c2;
+    EDISPLAY_DESGINAION_EMP c3;
+    while((choice = menu())!=0)
+    {
+        switch (choice)
+        {
+        case EACCEPT:
+            while((c1 = m1())!=0)
+            {
+                switch (c1)
+                {
+                    case ACCEPT_SALESMAN:
+                        
+                        break;
+                    case ACCEPT_MANAGER:
+                        
+                        break;
+                    case ACCEPT_SALESMAN_MANAGER:
+                        
+                        break;
+                    default:
+                        break;
+                }
+            }
+            break;
+        case EDISPLAY_COUNT_EMP:
+            while((c3 = m2())!=0)
+            {
+                switch (c3)
+                {
+                    case DISPLAY_COUNT_SALESMAN:
+                        
+                        break;
+                    case DISPLAY_COUNT_MANAGER:
+                        
+                        break;
+                    case DISPLAY_COUNT_SALESMAN_MANAGER:
+                        
+                        break;
+                    default:
+                        break;
+                }
+            }
+            break;
+        case EDISPLAY_DESGINAION_EMP:
+            while((c4 = m3())!=0)
+            {
+                switch (c4)
+                {
+                    case DISPLAY_SALESMAN:
+                        
+                        break;
+                    case DISPLAY_MANAGER:
+                        
+                        break;
+                    case DISPLAY_SALESMAN_MANAGER:
+                        
+                        break;
+                    case DISPLAY_ALL_EMP:
+
+                        break;
+                    default:
+                        break;
+                }
+            }
+                    break;
+        default:
+            break;
+        }
+    }
     return 0;
 }
 
