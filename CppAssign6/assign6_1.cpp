@@ -68,15 +68,79 @@ public:
     {
         this->year = year;
     }
-    // bool isLeap()
-    // {
-    //     if ()
-
-    //         else
-
-    //             return
-    // }
+    bool isLeap()
+    {
+        if((year%400 ==0 && year%4==0 )||(year%4==0 && year%100==0))
+            return true;
+        else
+            return false;
+    }
 };
+
+class Person
+{
+private:
+    string name;
+    string addr;
+    Date birth_date;
+
+public:
+    Person()
+    {
+        this->name = "";
+        this->addr = "";
+    }
+    Person(string name, string addr,int day,int month,int year) : birth_date(day,month,year)
+    {
+        this->name = name;
+        this->addr = addr;
+    }
+    void acceptPerson()
+    {
+        cout << "Enter Person Details" << endl;
+        cout << "Enter person name : ";
+        cin >> this->name;
+        cout << "\nEnter address : ";
+        cin >> this->addr;
+        cout<<"\nEnter birth date :";
+        birth_date.acceptDate();
+    }
+    void displayPerson()
+    {
+        cout << "********* PERSON DETAILS *********" << endl;
+        cout << "Name : " << this->name << endl;
+        cout << "Address : " << this->addr << endl;
+        cout << "Birth Date : ";
+        birth_date.displayDate();
+    }
+    string getName()
+    {
+        return this->name = name;
+    }
+    void setName(string name)
+    {
+        cout<<"";
+        this->name = name;
+    }
+    string getAddr()
+    {
+        return this->addr;
+    }
+    void setAddr()
+    {
+        this->addr = addr;
+    }
+    void getBirthdate()
+    {
+        cout<<"BirthDate : ";
+        cout<<birth_date.getDay()<<"/"<<birth_date.getMonth()<<"/"<<birth_date.getYear()<<endl;
+    }
+    void setBirthdate(Date dob)
+    {
+        this->birth_date = dob;
+    }
+};
+
 
 class Employee
 {
@@ -149,97 +213,31 @@ public:
         cout<<"Date of Joining : ";
         cout<<doj.getDay()<<"/"<<doj.getMonth()<<"/"<<doj.getYear()<<endl;
     }
-    void setDoj(Date d)
+    void setDoj(Date doj)
     {
-        cout<<"Enter date of joining : ";
-        d.setDay();
-        d.setDay();
-        d.setMonth();
+        this->doj = doj;
     }
 };
 
 
 
-class Person
-{
-private:
-    string name;
-    string addr;
-    Date birth_date;
-
-public:
-    Person()
-    {
-        this->name = "";
-        this->addr = "";
-    }
-    Person(string name, string addr,int day,int month,int year) : birth_date(day,month,year)
-    {
-        this->name = name;
-        this->addr = addr;
-    }
-    void acceptPerson()
-    {
-        cout << "Enter Person Details" << endl;
-        cout << "Enter person name : ";
-        cin >> this->name;
-        cout << "\nEnter address : ";
-        cin >> this->addr;
-        cout<<"\nEnter birth date :";
-        birth_date.acceptDate();
-    }
-    void displayPerson()
-    {
-        cout << "********* PERSON DETAILS *********" << endl;
-        cout << "Name : " << this->name << endl;
-        cout << "Address : " << this->addr << endl;
-        cout << "Birth Date : ";
-        birth_date.displayDate();
-    }
-    string getName()
-    {
-        return this->name = name;
-    }
-    void setName(string name)
-    {
-        cout<<"";
-        this->name = name;
-    }
-    string getAddr()
-    {
-        return this->addr;
-    }
-    void setAddr()
-    {
-        this->addr = addr;
-    }
-    void getBirthdate()
-    {
-        cout<<"BirthDate : ";
-        cout<<birth_date.getDay()<<"/"<<birth_date.getMonth()<<"/"<<birth_date.getYear()<<endl;
-    }
-    void setBirthdate(Date d)
-    {
-        cout<<"Enter BirthDate : "
-        d.setDay();
-        d.setMonth();
-        d.setYear();
-    }
-};
 
 int main()
 {
     // Date d;
-    Employee e;
-    Person p;
+    // Employee e;
+    // Person p;
     // d.displayDate();
     // e.acceptEmployee();
     // e.displayEmployee();
     // p.acceptPerson();
     // p.displayPerson();
     // e.getDoj();
-    p.setBirthdate();
-    p.getBirthdate();
+    // p.setBirthdate();
+    // p.getBirthdate();
+    Employee e1;
+    e1.acceptEmployee();
+    e1.displayEmployee();
 
     return 0;
 }
