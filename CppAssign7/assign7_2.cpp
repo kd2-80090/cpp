@@ -12,22 +12,11 @@ using namespace std;
 
 class Products
 {
-private:
+protected:
     int id;
     string title;
-    
-    char type;
-    int index;
-protected:
     double price;
-    void setPrice(double price)
-    {
-        this->price = price;
-    }
-    void setIndex(int index)
-    {
-        this->index = index;
-    }    
+
 public:
     Products()
     {
@@ -37,34 +26,47 @@ public:
     {
 
     }
-    virtual void addItem()=0;
-    virtual double total()=0;
+    virtual void addItem()
+    {
+        cout << "\nEnter Product id : ";
+        cin >> this->id;
+        cout << "Enter Product title : ";
+        cin.ignore();
+        getline(cin,this->title);
+        cout << "Enter Product price : ";
+        cin >> this->price;
+    }
+    virtual double calDiscount()=0;
+    double totalofItem()
+    {
+        return this->price - calDiscount();
+    }
 };
 
 class Book : public Products
 {
 private:
     string author;
-    int count;
+
 public:
 Book()
 {
 
 }
-Book(int id,string title,double price,string author) : Products(id.title,price)
+Book(int id,string title,double price,string author) : Products(id,title,price)
     {
 
     }
-    int addItem()
+    void addItem()
     {
-        cout<<"If want to Add, then 1 else 0 :"
-        cin>>count;
-        count = this->setIndex();
-        count++;
+        Products :: addItem();
+        cout<<"Enter Book Author :";
+        cin>>this->author;
+
     }
-    double total()
+    double calDiscount()
     {
-        return setPrice(this->price - (this->price*0.10));
+        return 0.10*this->price;
     }
 };
 
@@ -72,27 +74,26 @@ class Tape : public Products
 {
 private:
     string artist;
-    int count;
 public:
     Tape()
     {
 
     }
-    Tape(int id,string title,double price,string artist) : Products(id.title,price)
+    Tape(int id,string title,double price,string artist) : Products(id,title,price)
     {
 
     }
     void addItem()
     {
-        cout<<"If want to Add, then 1 else 0 :"
-        cin>>count;
-        count = this->setIndex();
-        count++;
+        Products :: addItem();
+        cout<<"Enter Tape Artist :";
+        cin.ignore();
+        getline(cin,this->artist);
     }
-
-    double total()
+    
+    double calDiscount()
     {
-        return setPrice(this->price - (this->price*0.10));
+        return this->price*0.05;
     }
 };
 enum Emenu
@@ -107,9 +108,10 @@ Emenu menu()
     int choice;
     cout<<"-------------------------";
     cout << "\n0.EXIT";
-    cout << "\n1.ADD_BOOK";
-    cout << "\n2.ADD_TAPE";
+    cout << "\n1.ADD BOOK";
+    cout << "\n2.ADD TAPE";
     cout << "\n3.TOTAL";
+    cout<<"\nEnter your choice = ";
     cin>>choice;
     cout<<"-------------------------";
     return Emenu(choice);
@@ -120,7 +122,7 @@ int main()
     Emenu choice;
     Products *arr[3];
     int index=0;
-    
+    double totAmount;
     while((choice = menu())!=0)
     {
         switch(choice)
@@ -130,36 +132,54 @@ int main()
                 {
                     arr[index] = new Book();
                     arr[index]-> addItem();
-                    arr[index]-> total();
+                    arr[index]-> calDiscount();
+                    arr[index]-> totalofItem();
                     index++; 
                 }
                 else
-                    cout<<"Cart is full..."<<endl;              
+                {
+                    cout<<"\n+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-";        
+                    cout<<"\nCart is full..."<<endl; 
+                    cout<<"+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-"<<endl;   
+                }                  
                 break;
             case ADD_TAPE:    
                 if(index<3)
                 {
                     arr[index] = new Tape();
                     arr[index]-> addItem();
-                    arr[index]-> total();
+                    arr[index]-> calDiscount();
+                    arr[index]-> totalofItem();
                     index++;  
                 }
                 else
-                    cout<<"Cart is full..."<<endl;          
+                {
+                    cout<<"\n+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-";
+                    cout<<"\nCart is full..."<<endl;  
+                    cout<<"+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-"<<endl; 
+                }       
                 break;
             case TOTAL:
-                if(index<3)
+                totAmount=0.0;
+                for(int i=0;i<index;i++)
                 {
-                    arr[index] -> total();
-                    index++;
+                    totAmount += arr[i]->totalofItem();
                 }
-                else
-                    cout<<"Cart is full...";
+                cout<<"\n==============================="<<endl;
+                cout<<"TOTAL AMOUNT TO PAY = "<<totAmount<<endl;
+                cout<<"==============================="<<endl;
+                break;
             default:
                 cout<<"Wrong choice."<<endl;
                 break;
         }
-
     }
-    cout<<"Thank you for using our app."<<endl;
+    for (int i = 0; i < index; i++)
+    {
+        delete arr[i];
+    }
+    cout<<"\n************************************";
+    cout<<"\nThank you for using our app."<<endl;
+    cout<<"************************************"<<endl;
+    return 0;
 }
