@@ -1,6 +1,5 @@
 
 
-
 /*
 Q3. Using the Q1 from assignment 6. Create an array of 10 employees. Provide menu driven code
 for the functionalities: Insted of char[] use string datatype
@@ -10,15 +9,16 @@ designation
 3. Display respective designation employees
 */
 
-
 #include <iostream>
+#include <string>
 using namespace std;
 
 class Employee
 {
-private:
+protected:
     int id;
     float sal;
+    string designation;
 
 public:
     Employee()
@@ -31,18 +31,19 @@ public:
         this->id = id;
         this->sal = sal;
     }
-    void accept()
+    virtual void accept()
     {
         cout << "\nEnter Employee id : ";
         cin >> this->id;
         cout << "Enter salary : ";
         cin >> this->sal;
     }
-    void display()
+    virtual void display()
     {
         cout << "Employee ID : " << this->id << endl;
         cout << "Salary : " << this->sal << endl;
     }
+
     int getId()
     {
         return this->id;
@@ -59,6 +60,18 @@ public:
     {
         this->sal = sal;
     }
+    string getDesignation()
+    {
+        return this->designation;
+    }
+    void setDesignation(string designation)
+    {
+        this->designation = designation;
+    }
+    virtual ~Employee()
+    {
+
+    }
 };
 
 class Salesman : virtual public Employee
@@ -67,13 +80,10 @@ private:
     float comm;
 
 public:
-    Salesman() : Employee(0, 0)
+    Salesman()
     {
-        this->comm = 0;
-    }
-    Salesman(float comm)
-    {
-        this->comm = comm;
+        this->designation = "Salesman";
+        this->comm = 0.0;
     }
     Salesman(int id, float sal, float comm) : Employee(id, sal)
     {
@@ -81,14 +91,14 @@ public:
     }
     void accept()
     {
-        Employee :: accept();
+        Employee ::accept();
         cout << "Enter Commision : ";
         cin >> this->comm;
     }
     void display()
     {
-        cout<<"----------------------"<<endl;
-        Employee :: display();
+        cout << "----------------------" << endl;
+        Employee ::display();
         cout << "Commision : " << this->comm << endl;
     }
     float getComm()
@@ -99,15 +109,16 @@ public:
     {
         this->comm = comm;
     }
+
 protected:
     void displaySalesman()
     {
-        cout<<"Commision : "<<this->comm<<endl;
+        cout << "Commision : " << this->comm << endl;
     }
     void acceptSalesman()
     {
-        cout<<"Enter commision : ";
-        cin>>this->comm;
+        cout << "Enter commision : ";
+        cin >> this->comm;
     }
 };
 
@@ -117,13 +128,10 @@ private:
     float bonus;
 
 public:
-    Manager() : Employee(0, 0)
+    Manager()
     {
+        this->designation = "Manager";
         this->bonus = 0;
-    }
-    Manager(float bonus)
-    {
-        this->bonus;
     }
     Manager(int id, float sal, float bonus) : Employee(id, sal)
     {
@@ -131,14 +139,14 @@ public:
     }
     void accept()
     {
-        Employee :: accept();
+        Employee ::accept();
         cout << "Enter bonus : ";
         cin >> this->bonus;
     }
     void display()
     {
-        cout<<"----------------------"<<endl;
-        Employee :: display();   
+        cout << "----------------------" << endl;
+        Employee ::display();
         cout << "Bonus : " << this->bonus << endl;
     }
     float getBonus()
@@ -149,15 +157,16 @@ public:
     {
         this->bonus = bonus;
     }
+
 protected:
     void displayManager()
     {
-        cout<<"Bonus : "<<this->getBonus()<<endl;
+        cout << "Bonus : " << this->getBonus() << endl;
     }
     void acceptManager()
     {
-        cout<<"Enter bonus : ";
-        cin>>this->bonus;
+        cout << "Enter bonus : ";
+        cin >> this->bonus;
     }
 };
 
@@ -166,217 +175,134 @@ class Sales_manager : public Salesman, public Manager
 public:
     Sales_manager()
     {
-    
+        this->designation = "Salesmanager";
     }
-    Sales_manager(int id,float sal,float comm,float bonus) : Employee(id,sal),Salesman(comm),Manager(bonus)
+    Sales_manager(int id, float sal, float comm, float bonus) : Employee(id, sal), Salesman(id, sal, comm), Manager(id, sal, bonus)
     {
-        
     }
     void accept()
     {
-        Employee :: accept();
-        Salesman :: acceptSalesman();
-        Manager :: acceptManager(); 
+        Employee ::accept();
+        float bonus, comm;
+        cout << "Enter bonus : ";
+        cin >> bonus;
+        setBonus(bonus);
+        cout << "Enter commision : ";
+        cin >> comm;
+        setComm(comm);
     }
     void display()
     {
-        cout<<"----------------------"<<endl;
-        Employee :: display();
-        Salesman :: displaySalesman();
-        Manager :: displayManager();
-        cout<<"----------------------"<<endl;
+        cout << "----------------------" << endl;
+        cout << "\nSales Manager ID : " << id << "\nSalary : " << getSal() << "\nBonus : " << Manager ::getBonus() << "\nCommision : " << Salesman::getComm() << endl;
+        cout << "----------------------" << endl;
     }
 };
+
 enum EMENU
 {
     EXIT,
-    EACCEPT,
-    EDISPLAY_COUNT_EMP,
-    EDISPLAY_DESGINAION_EMP
-};
-
-enum EACCEPT
-{
     ACCEPT_SALESMAN,
     ACCEPT_MANAGER,
-    ACCEPT_SALESMAN_MANAGER
-};
-
-enum EDISPLAY_COUNT_EMP
-{
-    DISPLAY_COUNT_SALESMAN,
-    DISPLAY_COUNT_MANAGER,
-    DISPLAY_COUNT_SALESMAN_MANAGER
-};
-
-enum EDISPLAY_DESGINAION_EMP
-{
-    DISPLAY_SALESMAN,
-    DISPLAY_MANAGER,
-    DISPLAY_SALESMAN_MANAGER,
+    ACCEPT_SALESMANAGER,
+    DISPLAY_COUNT_DESIGNATION,
     DISPLAY_ALL_EMP
 };
-
-EACCEPT m1()
-{
-    int choice;
-    cout<<"*******************************************";
-    cout<<"\n0.EXIT";
-    cout<<"\n1.ACCEPT_EMPLOYEE";
-    cout<<"\n2.DISPLAY_COUNT_ALL_EMPLOYEE";
-    cout<<"\n3.DISPLAY_RESPECTIVE_DESIGNATION_EMPLOYEE";
-    cout<<"*******************************************";
-    return EACCEPT(choice);
-}
-
-EDISPLAY_COUNT_EMP m2()
-{
-    int choice;
-    cout<<"*******************************************";
-    cout<<"\n0.EXIT";
-    cout<<"\n1.ACCEPT_EMPLOYEE";
-    cout<<"\n2.DISPLAY_COUNT_ALL_EMPLOYEE";
-    cout<<"\n3.DISPLAY_RESPECTIVE_DESIGNATION_EMPLOYEE";
-    cout<<"*******************************************";
-    return EDISPLAY_COUNT_EMP(choice);
-}
-
-EDISPLAY_DESIGNATION_EMP m3()
-{
-    int choice;
-    cout<<"*******************************************";
-    cout<<"\n0.EXIT";
-    cout<<"\n1.SALESMAN";
-    cout<<"\n2.MANAGER";
-    cout<<"\n3.SALES_MANAGER";
-    cout<<"\n4.ALL_EMPLOYEE";
-    cout<<"*******************************************";
-    return EDISPLAY_DESGINAION_EMP(choice);
-}
 
 EMENU menu()
 {
     int choice;
-    cout<<"*******************************************";
-    cout<<"\n0.EXIT";
-    cout<<"\n1.ACCEPT_EMPLOYEE";
-    cout<<"\n2.DISPLAY_COUNT_ALL_EMPLOYEE";
-    cout<<"\n3.DISPLAY_RESPECTIVE_DESIGNATION_EMPLOYEE";
-    cout<<"*******************************************";
+    cout << "\n*******************************************";
+    cout << "\n0.EXIT";
+    cout << "\n1.ACCEPT SALESMAN";
+    cout << "\n2.ACCEPT MANAGER";
+    cout << "\n3.ACCEPT SALESMANAGER";
+    cout << "\n4.DISPLAY COUNT OF DESIGNATION";
+    cout << "\n5.DISPLAY ALL EMPLOYEES";
+    cout << "\n\nENTER YOUR CHOICE = ";
+    cin >> choice;
+    cout << "\n*******************************************" << endl;
     return EMENU(choice);
 }
 
 int main()
 {
-
-    // Employee e;
-    // cout<<"----------------------"<<endl;
-    // cout<<"\nEnter the details for the Employee:  "<<endl;
-    // cout<<"----------------------"<<endl;
-    // e.accept();
-    // e.display();
-
-    // // Manager m2(1,2,3);
-    // Manager m1;
-    // cout<<"----------------------"<<endl;
-    // cout<<"\nEnter the details for the Manager:  "<<endl;
-    // cout<<"----------------------"<<endl;
-    // m1.accept();
-    // m1.display();
-
-    // // Salesman s;
-    // // s.display();
-    // // Salesman s2(1,2,3);
-    // Salesman s1;
-    // cout<<"----------------------"<<endl;
-    // cout<<"\nEnter the details for the Salesman:  "<<endl;
-    // cout<<"----------------------"<<endl;
-    // s1.accept();
-    // s1.display();
-    
-    // // Sales_manager s1;
-    // // s1.display();
-    // // Sales_manager s2(1,2.00,30.00,40.00);
-    // Sales_manager s;
-    // cout<<"----------------------"<<endl;
-    // cout<<"\nEnter the details for the Sales Manager:  "<<endl;
-    // cout<<"----------------------"<<endl;
-    // s.accept();
-    // s.display();
-
     EMENU choice;
-    EACCEPT c1;
-    EDISPLAY_COUNT_EMP c2;
-    EDISPLAY_DESGINAION_EMP c3;
-    while((choice = menu())!=0)
+
+    Employee *arr[10];
+    int index = 0;
+    int sales_cnt = 0;
+    int mgr_cnt = 0;
+    int sales_mgr_cnt = 0;
+    while ((choice = menu()) != 0)
     {
         switch (choice)
         {
-        case EACCEPT:
-            while((c1 = m1())!=0)
+        case ACCEPT_SALESMAN:
+        {
+            if (index < 10)
             {
-                switch (c1)
-                {
-                    case ACCEPT_SALESMAN:
-                        
-                        break;
-                    case ACCEPT_MANAGER:
-                        
-                        break;
-                    case ACCEPT_SALESMAN_MANAGER:
-                        
-                        break;
-                    default:
-                        break;
-                }
+                arr[index] = new Salesman();
+                arr[index]->accept();
+                index++;
             }
-            break;
-        case EDISPLAY_COUNT_EMP:
-            while((c3 = m2())!=0)
+            else
+                cout << "Employee limit reached already 10 Employees added.";
+        }
+        break;
+        case ACCEPT_MANAGER:
+        {
+            if (index < 10)
             {
-                switch (c3)
-                {
-                    case DISPLAY_COUNT_SALESMAN:
-                        
-                        break;
-                    case DISPLAY_COUNT_MANAGER:
-                        
-                        break;
-                    case DISPLAY_COUNT_SALESMAN_MANAGER:
-                        
-                        break;
-                    default:
-                        break;
-                }
+                arr[index] = new Manager();
+                arr[index]->accept();
+                index++;
             }
-            break;
-        case EDISPLAY_DESGINAION_EMP:
-            while((c4 = m3())!=0)
+            else
+                cout << "Employee limit reached already 10 Employees added.";
+        }
+        break;
+        case ACCEPT_SALESMANAGER:
+        {
+            if (index < 10)
             {
-                switch (c4)
-                {
-                    case DISPLAY_SALESMAN:
-                        
-                        break;
-                    case DISPLAY_MANAGER:
-                        
-                        break;
-                    case DISPLAY_SALESMAN_MANAGER:
-                        
-                        break;
-                    case DISPLAY_ALL_EMP:
-
-                        break;
-                    default:
-                        break;
-                }
+                arr[index] = new Sales_manager();
+                arr[index]->accept();
+                index++;
             }
-                    break;
+            else
+                cout << "Employee limit reached already 10 Employees added.";
+        }
+        break;
+        case DISPLAY_COUNT_DESIGNATION:
+        {
+            for (int i = 0; i < index; i++)
+            {
+                if (arr[i]->getDesignation() == "Salesman")
+                    sales_cnt++;
+                if (arr[i]->getDesignation() == "Manager")
+                    mgr_cnt++;
+                if (arr[i]->getDesignation() == "Salesmanager")
+                    sales_mgr_cnt++;
+            }
+            cout << "Designation : Salesman\t\t Count : " << sales_cnt << endl;
+            cout << "Designation : Manager\t\t Count : " << mgr_cnt << endl;
+            cout << "Designation : Salesmanager\t Count : " << sales_mgr_cnt << endl;
+        }
+        break;
+        case DISPLAY_ALL_EMP:
+        {
+            for (int i = 0; i < index; i++)
+                arr[i]->display();
+        }
+        break;
         default:
+            cout << "Wrong choice." << endl;
             break;
         }
     }
+    for (int i = 0; i < index; i++)
+        delete arr[i];
+    cout << "Thank you for using our app..." << endl;
     return 0;
 }
-
-
