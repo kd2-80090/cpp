@@ -1,183 +1,319 @@
+/*Q1. Implement a Stack class using C++ templates. Test stack operations on Stack<int>,
+Stack<double> and Stack<Box>. for above program*/
 
 
-/*
-Q3. Modify assignment 9 – Q2 to save all accounts data into STL list. Provide additional facility to
-display all accounts in forward and reverse order using iterators.
-*/
 
 #include <iostream>
 using namespace std;
 
-enum account_type
+template <typename T>
+class Stack
 {
-    SAVING = 1,
-    CURRENT = 2,
-    DMAT = 3
-};
-
-class insuff_funds
-{
-    int accid;
-    double cur_bal;
-    double withdraw_bal;
+private:
+    int index = 0;
+    int size;
+    T *top;
 
 public:
-    insuff_funds(int id, double cur_bal, double withdraw_bal)
+    Stack()
     {
-        this->accid = id;
-        this->cur_bal = cur_bal;
-        this->withdraw_bal = withdraw_bal;
-    }
-    void display()
-    {
-        cout << "\n****************************Insufficient funds****************************\n";
-        cout << "You Cannot withdraw amount\n";
-        cout << "Account id : " << accid;
-        cout << " Current balance : " << cur_bal << " is less than withdrawl amount : " << withdraw_bal;
-    }
-};
-
-class account
-{
-    int id;
-    double balance;
-    account_type type;
-
-public:
-    account()
-    {
-        this->id = 0;
-        this->balance = 0;
-    }
-    account(int id, account_type type)
-    {
-        this->id = id;
-        this->type = type;
-    }
-    int get_id()
-    {
-        return this->id;
-    }
-    void set_id(int id)
-    {
-        this->id = id;
-    }
-    void set_type(account_type type)
-    {
-        this->type = type;
-    }
-    account_type get_type()
-    {
-        return this->type;
+        this->size = 5;
+        top = new T[size];
     }
 
-    void accept()
+    Stack(int size)
     {
-        int num;
-        cout << "\nEnter bank account details";
-        cout << "\nEnter account id : ";
-        cin >> id;
-        cout << "\nEnter account balance : ";
-        cin >> balance;
-        cout << "1.SAVING \n 2.CURRENT \n 3.DMAT \n Choose account type : ";
-        cin >> num;
-        type = (account_type)num;
+        this->size = size;
+        top = new T[size];
     }
-    void display()
+
+    ~Stack()
     {
-        cout << "\n*****************************Bank Account Details*****************************\n";
-        cout << "Account id is : ";
-        cout << this->id;
-        cout << "\nAccount balance is : ";
-        cout << this->balance;
-        cout << "\nAccount type :";
-        switch (account_type(type))
+        delete[] top;
+    }
+
+    void push(T element)
+    {
+        if (!isFull())
         {
-        case SAVING:
-            cout << "SAVING";
-            break;
-        case CURRENT:
-            cout << "CURRENT";
-            break;
-        case DMAT:
-            cout << "DMAT";
-            break;
-        };
+            top[index++] = element;
+        }
+        else
+            cout << "Stack is full." << endl;
     }
-    void deposit(double depoAmt)
+
+    T pop()
     {
-        this->balance = this->balance + depoAmt;
-    }
-    void withdraw(double withdrawAmt)
-    {
-        if (withdrawAmt > balance)
-            throw insuff_funds(id, balance, withdrawAmt);
-       
-        this->balance = this->balance - withdrawAmt;
-    }
-};
-
-enum menulist
-{
-    EXIT,
-    ADDBAL,
-    WITHDRAW,
-    DISPLAYAC
-};
-
-int menu()
-{
-    int choice;
-    cout << "\n*****************************MENU*****************************\n";
-    cout << "\n 0.EXIT \t 1.ACCEPT\t 2.DEPOSIT \t 3.WITHDRAW \t 4.DISPLAY";
-    cout << "\nEnter your choice : ";
-    cin >> choice;
-    return menulist(choice);
-}
-
-int main()
-{
-    int choice, index = 0;
-    double depAmt, withdrawAmt;
-    account *arr[10];
-
-    while ((choice = menu()) != 0)
-    {
-        switch (choice)
+        if (!isEmpty())
         {
-        case 1:
-            arr[index] = new account();
-            arr[index]->accept();
-            index++;
-            break;
-        case 2:
-            cout << "Enter amount to deposit : ";
-            cin >> depAmt;
-            arr[index - 1]->deposit(depAmt);
-            arr[index - 1]->display();
-            break;
-        case 3:
-            cout << "Enter amount to withdraw : ";
-            cin >> withdrawAmt;
-            try
-            {
-                arr[index - 1]->withdraw(withdrawAmt);
-            }
-            catch (insuff_funds ins_funds)
-            {
-                ins_funds.display();
-            }
-            break;
-        case 4:
-            arr[index - 1]->display();
-            break;
+            return top[--index];
+        }
+        else
+        {
+            cout << "Stack is empty." << endl;
+            throw runtime_error("Stack is empty.");
         }
     }
 
-    for (int i = 0; i < index; i++)
+    T peek()
     {
-        delete arr[i];
+        if (!isEmpty())
+            return top[index - 1];
+        else
+        {
+            cout << "Stack is empty." << endl;
+            throw runtime_error("Stack is empty.");
+        }
+    }
+
+    bool isEmpty()
+    {
+        return (index <= 0);
+    }
+
+    bool isFull()
+    {
+        return (index >= size);
+    }
+
+    void print()
+    {
+        if (!isEmpty())
+        {
+            cout << "Elements in the stack are : \n";
+            for (int i = index - 1; i >= 0; i--)
+            {
+                cout << top[i] << endl;
+            }
+        }
+        else
+            cout << "Stack is empty." << endl;
+
+        cout << endl;
+    }
+};
+
+class Box
+{
+private:
+    int length;
+    int width;
+
+public:
+    Box()
+    {
+        this->length = 0;
+        this->width = 0;
+    }
+    Box(int length, int width)
+    {
+        this->length = length;
+        this->width = width;
+    }
+    void accept()
+    {
+        cout << "Enter Length of box : ";
+        cin >> this->length;
+        cout << "Enter Width of box : ";
+        cin >> this->width;
+    }
+    void display()
+    {
+        cout << "Length of box : " << this->length << endl;
+        cout << "Width of box : " << this->width << endl;
+    }
+    int getID() const
+    {
+        return length * width;
+    }
+};
+
+int main()
+{
+    Stack<int> intStack;
+    intStack.push(1);
+    intStack.push(2);
+    intStack.push(3);
+
+    while (!intStack.isEmpty())
+    {
+        cout << "Popped from intStack: " << intStack.pop() << endl;
+    }
+
+    Stack<double> doubleStack(3);
+    doubleStack.push(1.1);
+    doubleStack.push(2.2);
+    doubleStack.push(3.3);
+
+    while (!doubleStack.isEmpty())
+    {
+        cout << "Popped from doubleStack: " << doubleStack.pop() << endl;
+    }
+
+    Stack<Box> boxStack;
+    boxStack.push(Box(101, 5));
+    boxStack.push(Box(102, 6));
+    boxStack.push(Box(103, 7));
+
+    while (!boxStack.isEmpty())
+    {
+        Box box = boxStack.pop();
+        cout << "Popped from boxStack: Box ID = " << box.getID() << endl;
     }
 
     return 0;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// #include <iostream>
+// using namespace std;
+
+// template <typename T>
+// class Stack
+// {
+//     int index = 0;
+//     int size;
+//     T *top;
+
+// public:
+//     Stack()
+//     {
+//         this->size = 5;
+//         top = new T[size];
+//     }
+
+//     Stack(int size)
+//     {
+//         this->size = size;
+//         top = new T[size];
+//     }
+    
+
+//     void push()
+//     {
+//         if (!isFull())
+//         {
+//             cout << "Enter " << size << " Elements : \n";
+
+//             for (int i = 0; i < size; i++)
+//             {
+//                 cin >> top[i];
+//                 index++;
+//             }
+//         }
+//         else
+//             cout << "Stack is full." << endl;
+//     }
+
+//     void pop()
+//     {
+//         if (!isEmpty())
+//         {
+//             cout << "Popped elements : \n";
+//             for (int i = 0; i < size; i++)
+//             {
+//                 index--;
+//                 cout << top[index] << endl;
+//                 ;
+//             }
+//         }
+//         else
+//             cout << "Stack is empty." << endl;
+//     }
+
+//     void peek()
+//     {
+//         if (!isEmpty())
+//             cout << "Peek Element is: " << top[index - 1] << endl;
+//         else
+//             cout << "Stack is empty." << endl;
+//     }
+
+//     bool isEmpty()
+//     {
+//         return (index <= 0);
+//     }
+
+//     bool isFull()
+//     {
+//         return (index >= size);
+//     }
+
+//     void print()
+//     {
+//         int tindex = index;
+//         if (!isEmpty())
+//         {
+//             cout << "Elements in the stack are : \n";
+//             for (int i = 0; i < size; i++)
+//             {
+//                 tindex--;
+//                 cout << top[tindex] << endl;
+//             }
+//         }
+//         else
+//             cout << "Stack is empty." << endl;
+
+//         cout << endl;
+//     }
+
+//     ~Stack()
+//     {
+//         delete[] top;
+//     }
+// };
+
+
+// int main()
+// {
+//     int size;
+//     Stack<int> s1;
+//     s1.push();
+
+//     s1.peek();
+
+//     s1.print();
+//     s1.pop();
+//     s1.print();
+
+//     cout << "Enter Size of stack: ";
+//     cin >> size;
+//     Stack<double> s2(size);
+
+//     s2.push();
+
+//     s2.peek();
+
+//     s2.print();
+//     s2.pop();
+
+//     return 0;
+// }
